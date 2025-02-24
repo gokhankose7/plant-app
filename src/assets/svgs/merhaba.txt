@@ -1,0 +1,5 @@
+bu folder boş çünkü react native 0.78.0 sürümünde react-native-svg compatible değil ://// 
+https://github.com/software-mansion/react-native-svg/issues/2635
+
+aynı şekilde reanimated paketinde de benzer bir sorun var FYI
+
