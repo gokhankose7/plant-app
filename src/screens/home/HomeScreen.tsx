@@ -22,13 +22,14 @@ import {fetchCategories} from '../../store/slices/categoriesSlice';
 import type {AppDispatch, RootState} from '../../store';
 import {colors} from '../../utils/colors';
 import {headerBg} from '../../assets/pngs';
+import {updateGreeting} from '../../store/slices/appInfoSlice';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 const HomeScreen: React.FC<Props> = () => {
   const {top} = useSafeAreaInsets();
-  const greeting = 'Good Afternoon!';
   const dispatch = useDispatch<AppDispatch>();
+  const greeting = useSelector((state: RootState) => state.appInfo.greeting);
   const {
     data: questions,
     loading: questionsLoading,
@@ -43,6 +44,13 @@ const HomeScreen: React.FC<Props> = () => {
   useEffect(() => {
     dispatch(fetchQuestions());
     dispatch(fetchCategories());
+    dispatch(updateGreeting());
+
+    const intervalId = setInterval(() => {
+      dispatch(updateGreeting());
+    }, 60000);
+
+    return () => clearInterval(intervalId);
   }, [dispatch]);
 
   const renderGetStartedItem = ({item}: {item: (typeof questions)[0]}) => (
